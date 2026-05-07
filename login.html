@@ -9,8 +9,9 @@
 <body class="page-login">
 
   <header class="header">
-    <div class="logo">
+    <div class="logo-container">
       <h1>Kirwa Hedersdorf e.V.</h1>
+      <img src="images/logo.png" alt="Kirwa Hedersdorf Logo" />
     </div>
     <nav class="nav">
       <button class="menu-toggle" aria-label="Menü öffnen">☰</button>
@@ -18,32 +19,29 @@
         <li><a href="index.html">Start</a></li>
         <li><a href="impressions.html">Impressionen</a></li>
         <li><a href="contact.html">Kontakt</a></li>
-        <li><a href="login.html">Login</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="main login-container">
+  <main class="page-content login-container">
     <section class="hero">
       <h2>Vereins‑Login</h2>
-      <p>Mit diesem Zugang kannst du als Vereins‑Admin Texte, Bilder und Logos bearbeiten.</p>
+      <p>Bitte melde dich mit deinem Benutzernamen und Passwort an.</p>
     </section>
 
-    <section class="login-form">
-      <form action="#" method="post" class="form">
+    <form class="login-form" onsubmit="alert('Login nur Demo, Daten werden nicht gespeichert.'); return false;">
+      <div class="form-group">
         <label for="username">Benutzername</label>
-        <input type="text" id="username" name="username" required placeholder="z.B. admin" />
-
+        <input type="text" id="username" name="username" placeholder="Benutzername" required />
+      </div>
+      <div class="form-group">
         <label for="password">Passwort</label>
-        <input type="password" id="password" name="password" required placeholder="z.B. kirwa123" />
+        <input type="password" id="password" name="password" placeholder="Passwort" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Anmelden</button>
+    </form>
 
-        <button type="submit" class="btn btn-primary">Einloggen</button>
-      </form>
-    </section>
-
-    <section class="login-hint">
-      <p>Diese Seite ist ein Demo‑Login. In der Echt‑Version wird sie mit einem Backend verbunden.</p>
-    </section>
+    <p class="login-hint">Dies ist nur ein Demo‑Login. In der echten Produktion würden deine Daten über ein Backend‑System verarbeitet.</p>
   </main>
 
   <footer class="footer">
@@ -52,6 +50,7 @@
       <li><a href="impressum.html">Impressum</a></li>
       <li><a href="contact.html">Kontakt</a></li>
       <li><a href="satzung.html">Satzung</a></li>
+      <li><a href="login.html">Login</a></li>
     </ul>
   </footer>
 
