@@ -8,36 +8,65 @@
   --color-shadow:        rgba(0,0,0,0.08);
 }
 
-/* Modernere Schrift (führt manchmal Bookmark-Effekt auf HongKong-Servern, aber es ist OK) */
+/* ==============================
+   BODY + LAYOUT
+============================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
   font-family: "Segoe UI", "Roboto", "Open Sans", sans-serif;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Layout per Grid (Header, Main, Footer) */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 /* ==============================
-   HEADER + LOGO + MENU
+   HEADER: FULl‑WIDTH, GRÜN, MIT MITTIGEM LOGO
 ============================== */
 
-/* Layout des Headers */
+/* Header: voll grün bis oben + seitlich */
 .header {
+  grid-row: 1;
   background-color: var(--color-primary);
   padding: 1rem 2rem;
   color: var(--color-white);
   box-shadow: 0 2px 8px var(--color-shadow);
-  z-index: 10;
+  z-index: 1000; /* sehr hoch, damit Modal darunter */
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-/* Vereinsname + Logo rechts daneben */
-.logo {
+/* Logo mitten im Header (mit Vereinsname + Bild) */
+.header .logo-container {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  gap: 1.1rem;
 }
 
-/* Schriftart / Styling für den Vereinsnamen */
-.logo h1 {
+/* Vereinsname */
+.header h1 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
@@ -46,24 +75,25 @@ body {
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* Kirwa‑Logo rechts vom Text */
-.logo img {
-  margin-left: 0.75rem;
-  width: 70px;
-  border-radius: 0.8rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border: 2px solid rgba(255,255,255,0.2);
+/* Kirwa‑Logo – zentriert, abgerundet, wie andere Bilder */
+.header .logo-container img {
+  width: 75px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border: 2px solid rgba(255,255,255,0.15);
 }
 
-/* Menü: zentriert statt linksbündig */
+/* Navigation (Menü) rechts vom Logo */
+.header .nav {
+  margin-left: auto;
+}
+
 .nav ul.menu {
   list-style: none;
   margin: 0;
   padding: 0;
-  flex-grow: 1;
   display: flex;
-  justify-content: center;
-  gap: 1.8rem;
+  gap: 2rem;
 }
 
 .menu a {
@@ -71,7 +101,7 @@ body {
   text-decoration: none;
   font-weight: 500;
   position: relative;
-  padding: 0.25rem 0;
+  padding: 0.3rem 0;
 }
 
 .menu a::after {
@@ -90,52 +120,66 @@ body {
 }
 
 /* Burger‑Button (mobile toggle) */
-.nav .menu-toggle {
+.menu-toggle {
   display: none;
   background: none;
   border: none;
   color: var(--color-white);
   font-size: 1.4rem;
   cursor: pointer;
+  margin-left: 1rem;
 }
 
 /* Mobile Menü */
 @media (max-width: 768px) {
-  .nav .menu {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    /* bleibt in Zeile, wird bei kleinerem Viewport wrap */
-  }
   .nav {
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
   }
-  .logo {
-    margin-bottom: 0.5rem;
+  .nav ul.menu {
+    gap: 0.8rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav ul.menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+  }
+
+  .nav ul.menu.show {
+    display: flex;
   }
 }
 
 /* ==============================
-   MAIN + HERO + FLYER + SOCIAL
+   MAIN‑CONTENT (alle Seiten)
 ============================== */
 
-/* Hauptinhalt */
-.main {
+/* Body‑Inhalt (überall) */
+.page-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-/* Hero‑Bereich */
+/* HERO‑Bereich (Startseite) */
 .hero {
   background-color: var(--color-white);
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   padding: 2rem;
   box-shadow: 0 6px 20px var(--color-shadow);
   margin-bottom: 2.5rem;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   gap: 2.5rem;
 }
 
@@ -143,25 +187,20 @@ body {
   flex: 1 1 300px;
 }
 
-.hero-text h2 {
+.hero h2 {
   margin: 0 0 0.6rem 0;
   color: var(--color-primary);
   font-size: 1.7rem;
   font-weight: 600;
 }
 
-.hero-text p {
+.hero p {
   margin: 0;
   color: var(--color-accent);
   font-size: 1.1rem;
 }
 
-/* HERO‑Bild vergrößern & klickbar */
-.hero-img {
-  position: relative;
-  flex-shrink: 0;
-}
-
+/* Mitgliederbild */
 .hero-img img {
   width: 100%;
   max-width: 380px;
@@ -170,13 +209,13 @@ body {
   cursor: zoom‑in;
 }
 
-/* FLYER‑Bereich größer */
+/* FLYER‑Bereich */
 .next-event {
   background-color: var(--color-white);
   border-radius: 1rem;
-  padding: 2rem 2rem 1.8rem;
+  padding: 2.2rem 2rem 1.8rem;
   box-shadow: 0 6px 20px var(--color-shadow);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.8rem;
 }
 
 .next-event h3 {
@@ -186,27 +225,24 @@ body {
   font-weight: 600;
 }
 
-/* FLYER‑Bild größer + Lesbarkeit */
+/* FLYER‑Bild größer */
 .flyer {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  gap: 2.2rem;
+  gap: 2.4rem;
 }
 
-/* Flyer‑Bild: größer */
 .flyer img {
   width: 100%;
-  max-width: 350px;
+  max-width: 380px;
   border-radius: 1rem;
   box-shadow: 0 4px 12px var(--color-shadow);
   cursor: zoom‑in;
-  flex-shrink: 0;
 }
 
-/* Flyer‑Text */
 .flyer-text {
-  flex: 1 1 250px;
+  flex: 1 1 270px;
 }
 
 .flyer-text p {
@@ -216,7 +252,7 @@ body {
 
 /* SOCIAL‑Buttons (zentr. im Bereich) */
 .social {
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
   text-align: center;
 }
 
@@ -260,28 +296,39 @@ body {
 }
 
 /* ==============================
-   GALERIEN: JAHRE & KLEINE MODALS
+   GALLERIEN (IMPRESSIOEN)
 ============================== */
 
-/* GALERIEN (z.B. Impressions‑Jahre-Seiten + Impressionen‑Übersicht) */
-/* Kacheln für Jahre */
+/* Übersichtsseite Impressionen */
+.impressions-overview {
+  margin-bottom: 2.5rem;
+}
+
+.impressions-overview h2 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* Überschrift „Wähle ein Jahr aus“ */
 .kirwa-years {
   margin-bottom: 3rem;
 }
 
 .kirwa-years h3 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.1rem 0;
   color: var(--color-primary);
   font-size: 1.4rem;
   font-weight: 600;
   text-align: center;
 }
 
-/* Kacheln: 2022–2026 */
+/* Pro Jahr: 2022–2026 */
 .year-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 3fr));
-  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 2rem;
   justify-items: center;
 }
 
@@ -294,25 +341,28 @@ body {
   background-color: var(--color-white);
   border-radius: 1.2rem;
   overflow: hidden;
-  box-shadow: 0 4px 12px var(--color-shadow);
+  box-shadow: 0 4px 14px var(--color-shadow);
   transition: transform 0.2s, box-shadow 0.2s;
-  padding: 0.8rem 0 0.3rem 0;
+  padding: 1rem 0.5rem 0.6rem 0.5rem;
+  max-width: 100%;
 }
 
 .year-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--color-shadow);
+  box-shadow: 0 8px 24px var(--color-shadow);
 }
 
+/* Jahres‑Bild (Vorschau) */
 .year-card img {
   width: 100%;
-  max-width: 100%;
+  max-width: 160px;
   aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 0.8rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
+/* Jahres‑Tesxt */
 .year-card h4 {
   margin: 0 0 0.3rem 0;
   font-size: 1.1rem;
@@ -320,17 +370,16 @@ body {
   text-align: center;
 }
 
-/* Vereins‑ & Vorstands‑bilder */
+/* Vereins‑ & Vorstands‑Bilder */
 .team-photos {
-  margin-bottom: 3rem;
+  margin-bottom: 2.8rem;
 }
 
 .photo-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 2rem;
-  margin-top: 1rem;
+  justify-content: center;
 }
 
 .photo-item {
@@ -354,78 +403,62 @@ body {
   font-size: 0.95rem;
 }
 
-/* GROSSER BILDMODAL (für alle Klick? 1 Fenster für alle) */
+/* UND JEDES JAHRESALBUM (2022–2026): einheitlich */
 
-/* Grundsätzlicher Modal‑Stil */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 3000;
-  left: 0;
-  top: 0;
+/* Header in den Jahres‑Seiten */
+.impressions-year h2 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* Galerie‑Grid: ALLE JAHRE identisch formatiert */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  margin-top: 1.8rem;
+}
+
+/* Jedes Bild in der Galerie */
+.gallery img {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.85);
-  justify-content: center;
-  align-items: center;
+  border-radius: 0.8rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  cursor: zoom‑in;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Bild im Modal */
-.modal-content {
-  max-width: 90%;
-  max-height: 85vh;
-  border-radius: 1rem;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-}
-
-/* Schließen‑Button */
-.modal-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 2rem;
-  color: var(--color-white);
-  font-size: 2.2rem;
-  cursor: pointer;
-  z-index: 3001;
-  text-shadow: 0 0 4px rgba(0,0,0,0.8);
-}
-
-.modal-close:hover {
-  color: #ccc;
-}
-
-/* Optional: Bild‑Beschriftung */
-.modal-caption {
-  color: var(--color-white);
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 0.95rem;
-  opacity: 0.9;
+.gallery img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
 /* ==============================
-   FOOTER + LOGIN NUR IN FOOTER
+   FOOTER: NUR IM FOOOTER, RUNTER AM BILDSCHIRM
 ============================== */
 
+/* Footer selbst */
 .footer {
+  grid-row: 3;
   background-color: var(--color-primary);
   color: var(--color-white);
-  padding: 1.5rem 0;
+  padding: 1.8rem 0 1.3rem 0;
   text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Alle Links im Footer (zentriert + Login nur dort) */
+/* Links im Footer (Login inklusive) */
 .footer-links {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 1.5rem 3rem;
+  justify-content: center;
+  gap: 1.4rem 3rem;
 }
 
 .footer-links a {
@@ -443,7 +476,7 @@ body {
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: var(--color-white);
+  background-color: var(--color-primary-light);
   transition: width 0.3s ease;
 }
 
@@ -451,12 +484,89 @@ body {
   width: 100%;
 }
 
-/* Eyecatcher für Login im Footer */
+/* Login‑Link im Footer */
 .footer-links a[href="login.html"] {
   color: var(--color-primary-light);
   font-weight: 600;
 }
 
-.footer-links a[href="login.html"]::after {
-  background-color: var(--color-primary-light);
+/* Wenn viel Inhalt, Footer bleibt unten (nicht schwebend) */
+ body {
+  margin: 0;
+ }
+ main.page-content {
+  padding-bottom: 0.1rem; /* leichte Polsterung nach unten */
+ }
+
+/* ==============================
+   MODAL FÜR VERGRÖSSERTE BILDER
+============================== */
+
+/* Modal‑Overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Inhalt des Modals */
+.modal-content {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Schließen‑Button */
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  color: var(--color-white);
+  font-size: 2.4rem;
+  cursor: pointer;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+  z-index: 1002;
+}
+
+.modal-close:hover {
+  color: #cccccc;
+}
+
+/* Bildbeschriftung (falls verwendet) */
+.modal-caption {
+  color: #f0f0f0;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Beim Öffnen des Modals: BODY darf nicht scrollen, aber Inhalt ist OK */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Für das eigentliche Scrollen, falls der Modal-Inhalt scrollbar ist */
+.modal {
+  overflow: auto;
+}
+
+.modal .modal-inner {
+  display: inline-block;
 }
