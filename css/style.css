@@ -8,43 +8,61 @@
   --color-shadow:        rgba(0,0,0,0.08);
 }
 
-/* Layout (Header, Main, Footer) */
-html {
-  height: 100%;
-}
-
+/* Modernere Schrift (führt manchmal Bookmark-Effekt auf HongKong-Servern, aber es ist OK) */
 body {
-  margin: 0;
-  min-height: 100vh;
   font-family: "Segoe UI", "Roboto", "Open Sans", sans-serif;
-  line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }
 
-/* Header (grüne Menü‑Bar) */
+/* ==============================
+   HEADER + LOGO + MENU
+============================== */
+
+/* Layout des Headers */
 .header {
   background-color: var(--color-primary);
   padding: 1rem 2rem;
   color: var(--color-white);
   box-shadow: 0 2px 8px var(--color-shadow);
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+/* Vereinsname + Logo rechts daneben */
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Schriftart / Styling für den Vereinsnamen */
 .logo h1 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* Navigation */
-.menu {
+/* Kirwa‑Logo rechts vom Text */
+.logo img {
+  margin-left: 0.75rem;
+  width: 70px;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+/* Menü: zentriert statt linksbündig */
+.nav ul.menu {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-grow: 1;
   display: flex;
+  justify-content: center;
   gap: 1.8rem;
 }
 
@@ -71,25 +89,35 @@ body {
   width: 100%;
 }
 
-/* Burger‑Menü auf Mobil */
-.menu-toggle {
+/* Burger‑Button (mobile toggle) */
+.nav .menu-toggle {
   display: none;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: 1.4rem;
+  cursor: pointer;
 }
 
+/* Mobile Menü */
 @media (max-width: 768px) {
-  .menu {
-    display: none;
-    flex-direction: column;
-    gap: 0.8rem;
-    padding: 1rem 0;
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .menu.show {
+  .nav .menu {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* bleibt in Zeile, wird bei kleinerem Viewport wrap */
+  }
+  .nav {
+    flex-wrap: wrap;
+  }
+  .logo {
+    margin-bottom: 0.5rem;
   }
 }
+
+/* ==============================
+   MAIN + HERO + FLYER + SOCIAL
+============================== */
 
 /* Hauptinhalt */
 .main {
@@ -98,7 +126,7 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Hero (herzlich willkommen usw.) */
+/* Hero‑Bereich */
 .hero {
   background-color: var(--color-white);
   border-radius: 1rem;
@@ -107,8 +135,8 @@ body {
   margin-bottom: 2.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .hero-text {
@@ -116,7 +144,7 @@ body {
 }
 
 .hero-text h2 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.6rem 0;
   color: var(--color-primary);
   font-size: 1.7rem;
   font-weight: 600;
@@ -128,18 +156,25 @@ body {
   font-size: 1.1rem;
 }
 
-.hero-img img {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 1rem;
-  box-shadow: 0 4px 16px var(--color-shadow);
+/* HERO‑Bild vergrößern & klickbar */
+.hero-img {
+  position: relative;
+  flex-shrink: 0;
 }
 
-/* Flyer‑Bereich */
+.hero-img img {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px var(--color-shadow);
+  cursor: zoom‑in;
+}
+
+/* FLYER‑Bereich größer */
 .next-event {
   background-color: var(--color-white);
   border-radius: 1rem;
-  padding: 2rem;
+  padding: 2rem 2rem 1.8rem;
   box-shadow: 0 6px 20px var(--color-shadow);
   margin-bottom: 2.5rem;
 }
@@ -151,18 +186,27 @@ body {
   font-weight: 600;
 }
 
+/* FLYER‑Bild größer + Lesbarkeit */
 .flyer {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
+  align-items: stretch;
+  gap: 2.2rem;
 }
 
+/* Flyer‑Bild: größer */
 .flyer img {
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
   border-radius: 1rem;
   box-shadow: 0 4px 12px var(--color-shadow);
+  cursor: zoom‑in;
+  flex-shrink: 0;
+}
+
+/* Flyer‑Text */
+.flyer-text {
+  flex: 1 1 250px;
 }
 
 .flyer-text p {
@@ -170,26 +214,29 @@ body {
   color: var(--color-accent);
 }
 
-/* Social‑Buttons */
+/* SOCIAL‑Buttons (zentr. im Bereich) */
 .social {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .social h3 {
-  margin: 0 0 0.8rem 0;
+  margin: 0 0 1rem 0;
   color: var(--color-primary);
+  font-size: 1.4rem;
 }
 
 .social-links {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .btn {
   display: inline-block;
   padding: 0.8rem 1.8rem;
-  border-radius: 0.75rem;
+  border-radius: 1.5rem;
   text-decoration: none;
   font-weight: 500;
   text-align: center;
@@ -212,7 +259,157 @@ body {
   box-shadow: 0 4px 12px var(--color-shadow);
 }
 
-/* Footer */
+/* ==============================
+   GALERIEN: JAHRE & KLEINE MODALS
+============================== */
+
+/* GALERIEN (z.B. Impressions‑Jahre-Seiten + Impressionen‑Übersicht) */
+/* Kacheln für Jahre */
+.kirwa-years {
+  margin-bottom: 3rem;
+}
+
+.kirwa-years h3 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Kacheln: 2022–2026 */
+.year-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 3fr));
+  gap: 1.8rem;
+  justify-items: center;
+}
+
+.year-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--color-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0.8rem 0 0.3rem 0;
+}
+
+.year-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--color-shadow);
+}
+
+.year-card img {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.year-card h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+/* Vereins‑ & Vorstands‑bilder */
+.team-photos {
+  margin-bottom: 3rem;
+}
+
+.photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.photo-item {
+  flex: 1 1 300px;
+  background-color: var(--color-white);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px var(--color-shadow);
+}
+
+.photo-item img {
+  width: 100%;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 6px var(--color-shadow);
+  cursor: zoom‑in;
+}
+
+.photo-item p {
+  margin: 0.4rem 0 0 0;
+  color: var(--color-accent);
+  font-size: 0.95rem;
+}
+
+/* GROSSER BILDMODAL (für alle Klick? 1 Fenster für alle) */
+
+/* Grundsätzlicher Modal‑Stil */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Bild im Modal */
+.modal-content {
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 1rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+
+/* Schließen‑Button */
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  color: var(--color-white);
+  font-size: 2.2rem;
+  cursor: pointer;
+  z-index: 3001;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+}
+
+.modal-close:hover {
+  color: #ccc;
+}
+
+/* Optional: Bild‑Beschriftung */
+.modal-caption {
+  color: var(--color-white);
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* ==============================
+   FOOTER + LOGIN NUR IN FOOTER
+============================== */
+
 .footer {
   background-color: var(--color-primary);
   color: var(--color-white);
@@ -220,6 +417,7 @@ body {
   text-align: center;
 }
 
+/* Alle Links im Footer (zentriert + Login nur dort) */
 .footer-links {
   list-style: none;
   margin: 0;
@@ -227,7 +425,7 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1.5rem 3rem;
 }
 
 .footer-links a {
@@ -235,7 +433,7 @@ body {
   text-decoration: none;
   font-size: 0.9rem;
   position: relative;
-  padding: 0.25rem 0;
+  padding: 0.3rem 0;
 }
 
 .footer-links a::after {
@@ -251,4 +449,14 @@ body {
 
 .footer-links a:hover::after {
   width: 100%;
+}
+
+/* Eyecatcher für Login im Footer */
+.footer-links a[href="login.html"] {
+  color: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.footer-links a[href="login.html"]::after {
+  background-color: var(--color-primary-light);
 }
