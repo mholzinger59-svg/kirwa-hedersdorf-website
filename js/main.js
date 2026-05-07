@@ -1,5 +1,9 @@
-// Burger‑Menü öffnen/schließen
 document.addEventListener("DOMContentLoaded", function () {
+
+  // =====================
+  // 1. Burger‑Menü
+  // =====================
+
   const menuToggle = document.querySelector(".menu-toggle");
   const menu = document.querySelector(".menu");
 
@@ -9,29 +13,54 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Einfacher Login‑Mock (nur als Hinweis, später wird das Backend übernommen)
-  const loginForm = document.querySelector(".login-form form");
+  // =====================
+  // 2. Bild‑Modal für alle `.hero-img img`, `.flyer img`, `.gallery img`, `.photo-item img`
+  // =====================
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const user = this.username.value;
-      const pass = this.password.value;
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" alt="">
+  `;
+  document.body.appendChild(modal);
 
-      if (user === "admin" && pass === "kirwa123") {
-        // Beispiel: nach „Login“ eine kleine Info anzeigen
-        const main = document.querySelector(".main");
-        main.insertAdjacentHTML(
-          "afterend",
-          `<div class="admin-panel">
-            <h4>ADMIN‑MOCK AKTIV</h4>
-            <p>Du bist jetzt eingeloggt. In der echten Version könntest du hier
-               Texte, Bilder und Logos bearbeiten.</p>
-          </div>`
-        );
-      } else {
-        alert("Falscher Login (für Demo: User=admin, Passwort=kirwa123)");
-      }
+  const closeModal = () => {
+    modal.style.display = "none";
+  };
+
+  modal.querySelector(".modal-close").addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  const imageTriggers = document.querySelectorAll(
+    ".hero-img img, .flyer img, .gallery img, .photo-item img, .year-card img"
+  );
+
+  imageTriggers.forEach((img) => {
+    img.addEventListener("click", function () {
+      // Modal öffnen
+      const modalImg = modal.querySelector(".modal-content");
+      modalImg.src = this.src;
+      modalImg.alt = this.alt;
+
+      modal.style.display = "flex";
+
+      // Body sperren für kleinere SSH (nicht zwingend nötig, aber hübsch)
+      document.body.style.overflow = "hidden";
+
+      // Später, wenn du willst: Captions einfügen
+      // Beispiel:
+      // const caption = modal.querySelector(".modal-caption");
+      // caption.textContent = this.alt;
     });
-  }
+  });
+
+  // Escape‑Taste schließt Modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.style.display === "flex") {
+      closeModal();
+    }
+  });
 });
