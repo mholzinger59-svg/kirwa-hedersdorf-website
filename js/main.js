@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // =====================
-  // 2. Bild‑Modal für alle `.hero-img img`, `.flyer img`, `.gallery img`, `.photo-item img`
+  // 2. Bild‑Modal für alle `.hero-img img`, `.flyer img`, `.gallery img`, `.photo-item img`, `.year-card img`
   // =====================
 
   const modal = document.createElement("div");
@@ -25,35 +25,35 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.body.appendChild(modal);
 
+  const modalClose = modal.querySelector(".modal-close");
+  const modalImg = modal.querySelector(".modal-content");
+
   const closeModal = () => {
     modal.style.display = "none";
+    document.body.style.overflow = "";     // wichtig: wieder Unlock
+    document.body.style.position = "";     // wieder normales Layout
   };
 
-  modal.querySelector(".modal-close").addEventListener("click", closeModal);
+  // Schließen via X oder Klick auf Hintergrund
+  modalClose.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
 
+  // Bild‑Trigger: alle relevanten Bilder
   const imageTriggers = document.querySelectorAll(
     ".hero-img img, .flyer img, .gallery img, .photo-item img, .year-card img"
   );
 
   imageTriggers.forEach((img) => {
     img.addEventListener("click", function () {
-      // Modal öffnen
-      const modalImg = modal.querySelector(".modal-content");
       modalImg.src = this.src;
       modalImg.alt = this.alt;
-
       modal.style.display = "flex";
 
-      // Body sperren für kleinere SSH (nicht zwingend nötig, aber hübsch)
+      // Body‑Scrolling kurz aus für bessere UX
+      // Aber ohne „overflow: hidden; position: fixed;“, das macht dein Problem
       document.body.style.overflow = "hidden";
-
-      // Später, wenn du willst: Captions einfügen
-      // Beispiel:
-      // const caption = modal.querySelector(".modal-caption");
-      // caption.textContent = this.alt;
     });
   });
 
