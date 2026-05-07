@@ -10,8 +10,10 @@
 
   <header class="header">
     <div class="logo-container">
-      <h1>Kirwa Hedersdorf e.V.</h1>
-      <img src="images/logo.png" alt="Kirwa Hedersdorf Logo" />
+      <h1><a href="index.html">Kirwa Hedersdorf e.V.</a></h1>
+      <a href="index.html">
+        <img src="images/logo.png" alt="Kirwa Hedersdorf Logo" />
+      </a>
     </div>
     <nav class="nav">
       <button class="menu-toggle" aria-label="Menü öffnen">☰</button>
@@ -24,7 +26,7 @@
   </header>
 
   <main class="page-content">
-    <!-- Hero: Mitglieder & Info -->
+    <!-- Hero: Mitgliederbild + Text -->
     <section class="hero">
       <div class="hero-text">
         <h2>Herzlich willkommen auf der offiziellen Seite der Kirwa Hedersdorf e.V.</h2>
@@ -35,15 +37,32 @@
       </div>
     </section>
 
-    <!-- Nächste Veranstaltung / Flyer -->
+    <!-- Nächste Veranstaltung (Flyer) -->
     <section class="next-event">
       <h3>Nächste Veranstaltung</h3>
+
+      <!-- Alternative 1: nur EIN Flyer -->
       <div class="flyer">
-        <img src="images/flyer.jpg" alt="Programm der nächsten Kirwa" />
-        <div class="flyer-text">
-          <p><strong>21. Kirwa Hedersdorf</strong><br>04. – 07. Juni 2026</p>
-          <p>Genauere Infos folgen in Kürze.</p>
+        <img src="images/flyer-1.jpg" alt="Programm der nächsten Kirwa" />
+      </div>
+
+      <!-- Alternative 2: SLIDER mit mehreren Flyern (optional) -->
+      <!-- Wenn du 2+ Flyer haben willst, TRIER diesen Block zusätzlich -->
+
+      <div class="flyer-slider">
+        <div class="flyer-images">
+          <img src="images/flyer-1.jpg" alt="Kirwa 2026 - Tag 1">
+          <img src="images/flyer-2.jpg" alt="Kirwa 2026 - Tag 2">
+          <img src="images/flyer-3.jpg" alt="Kirwa 2026 - Tag 3">
         </div>
+        <button class="btn-prev">‹</button>
+        <button class="btn-next">›</button>
+      </div>
+
+      <!-- Text immer sichtbar -->
+      <div class="flyer-text">
+        <p><strong>21. Kirwa Hedersdorf</strong><br>04. – 07. Juni 2026</p>
+        <p>Genauere Infos folgen in Kürze.</p>
       </div>
     </section>
 
