@@ -9,13 +9,15 @@
 }
 
 /* ==============================
-   BODY + LAYOUT
+   BODY + LAYOUT (Desktop + Mobile)
 ============================== */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -27,9 +29,8 @@ body {
 }
 
 /* Layout per Grid (Header, Main, Footer) */
-html, body {
+html {
   height: 100%;
-  margin: 0;
 }
 
 body {
@@ -42,6 +43,7 @@ body {
    HEADER: FULl‑WIDTH, GRÜN, MIT MITTIGEM LOGO
 ============================== */
 
+/* Header: voll grün bis oben + seitlich */
 .header {
   grid-row: 1;
   background-color: var(--color-primary);
@@ -65,6 +67,7 @@ body {
   gap: 1.1rem;
 }
 
+/* Vereinsname */
 .header h1 {
   margin: 0;
   font-size: 1.5rem;
@@ -74,6 +77,7 @@ body {
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
+/* Logo selbst */
 .header .logo-container img {
   width: 75px;
   border-radius: 1rem;
@@ -88,8 +92,6 @@ body {
 
 .nav ul.menu {
   list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   gap: 2rem;
 }
@@ -129,9 +131,10 @@ body {
 }
 
 /* =========================================
-   MOBILE HEADER / MENÜ
+   MOBILE HEADER / MENÜ (optimiert)
 ========================================= */
 
+/* Für kleine Bildschirme (z. B. Smartphones) */
 @media (max-width: 768px) {
   .header {
     padding: 0.7rem 1rem 0.6rem;
@@ -140,27 +143,35 @@ body {
     gap: 0.3rem;
   }
 
+  /* Logo‑Container */
   .header .logo-container {
+    flex-direction: row;
+    align-items: center;
     gap: 0.7rem;
   }
 
+  /* Logo etwas kleiner auf Mobile */
   .header .logo-container img {
     width: 62px;
   }
 
+  /* Navigation */
   .header .nav {
     margin: 0;
     width: 100%;
   }
 
+  /* Burger‑Button sichtbar */
   .menu-toggle {
     display: block;
   }
 
+  /* Mobile Menü (initial verborgen) */
   .nav ul.menu {
     display: none;
     gap: 0.8rem 0.7rem;
     padding: 0.5rem 0.2rem;
+    justify-content: center;
   }
 
   .nav ul.menu.show {
@@ -174,24 +185,44 @@ body {
     padding: 0.5rem 0.7rem;
     font-size: 0.9rem;
   }
+
+  /* Menüpunkte weniger eng */
+  .nav ul.menu.show a::after {
+    height: 1.8px;
+  }
 }
 
-/* Für sehr kleine Mobile‑Bildschirme */
+/* Für sehr kleine Bildschirme (z. B. kleine Smartphones) */
 @media (max-width: 399px) {
+  .header {
+    padding: 0.6rem 0.8rem 0.5rem;
+  }
+
+  .header .logo-container {
+    gap: 0.4rem;
+  }
+
   .header .logo-container img {
     width: 58px;
   }
+
   .nav ul.menu {
     gap: 0.6rem 0.5rem;
+    padding: 0.4rem 0.1rem;
   }
+
   .menu a {
     padding: 0.4rem 0.6rem;
     font-size: 0.85rem;
   }
+
+  .nav ul.menu.show a::after {
+    height: 1.6px;
+  }
 }
 
 /* ==============================
-   MAIN‑CONTENT (Startseite)
+   MAIN‑CONTENT (alle Seiten)
 ============================== */
 
 .page-content {
@@ -200,7 +231,7 @@ body {
   padding: 2rem 1rem;
 }
 
-/* HERO */
+/* HERO‑Bereich (Startseite) */
 .hero {
   background-color: var(--color-white);
   border-radius: 1.1rem;
@@ -230,6 +261,7 @@ body {
   font-size: 1.1rem;
 }
 
+/* Mitgliederbild */
 .hero-img img {
   width: 100%;
   max-width: 380px;
@@ -238,8 +270,7 @@ body {
   cursor: zoom‑in;
 }
 
-/* NEXT EVENT / FLYER */
-
+/* FLYER‑Bereich */
 .next-event {
   background-color: var(--color-white);
   border-radius: 1rem;
@@ -255,7 +286,14 @@ body {
   font-weight: 600;
 }
 
-/* FLYER‑Bild (ohne Slider, falls nur 1) */
+/* FLYER‑Bild größer */
+.flyer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 2.4rem;
+}
+
 .flyer img {
   width: 100%;
   max-width: 380px;
@@ -264,7 +302,6 @@ body {
   cursor: zoom‑in;
 }
 
-/* FLYER‑TEXT */
 .flyer-text {
   flex: 1 1 270px;
 }
@@ -274,66 +311,7 @@ body {
   color: var(--color-accent);
 }
 
-/* FLYER‑SLIDER (nur sichtbar, wenn mehrere Flyer) */
-.flyer-slider {
-  display: none; /* standardmäßig verborgen */
-}
-
-.flyer-slider.multi-flyers {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid var(--color-accent);
-  border-radius: 0.8rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Flyer‑Bilder in der Slider‑Strecke */
-.flyer-images {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.6rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  scroll-behavior: smooth;
-}
-
-.flyer-images img {
-  min-width: 300px;
-  max-width: 400px;
-  height: auto;
-  border-radius: 0.6rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  cursor: zoom‑in;
-}
-
-/* Schaltflächen (Pfeiltasten) */
-.btn-prev,
-.btn-next {
-  background: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.6rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-
-.btn-prev:hover,
-.btn-next:hover {
-  background: var(--color-primary-light);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* ==============================
-   SOCIAL‑BUTTONS
-============================== */
-
+/* SOCIAL‑Buttons */
 .social {
   margin-bottom: 2.2rem;
   text-align: center;
@@ -382,7 +360,6 @@ body {
    GALLERIEN (IMPRESSIOEN)
 ============================== */
 
-/* Alben‑Übersicht */
 .impressions-overview {
   margin-bottom: 2.5rem;
 }
@@ -394,7 +371,7 @@ body {
   font-weight: 600;
 }
 
-/* Kacheln „Wähle ein Jahr“ */
+/* Übersicht: Wählen Sie ein Jahr */
 .kirwa-years {
   margin-bottom: 3rem;
 }
@@ -407,7 +384,7 @@ body {
   text-align: center;
 }
 
-/* Pro Jahr */
+/* Kacheln für Jahre */
 .year-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -483,7 +460,7 @@ body {
   font-size: 0.95rem;
 }
 
-/* GALERIEN (2022–2026) */
+/* GALLERIEN (JAHRE 2022–2026) */
 .impressions-year h2 {
   margin: 0 0 1rem 0;
   color: var(--color-primary);
@@ -491,7 +468,7 @@ body {
   font-weight: 600;
 }
 
-/* Einheitliches Grid */
+/* Einheitliches Grid für alle Jahres‑Galerien */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -514,7 +491,7 @@ body {
 }
 
 /* ==============================
-   FOOTER
+   FOOTER: NUR IM FOOOTER, RUNTER AM BILDSCHIRM
 ============================== */
 
 .footer {
@@ -523,4 +500,109 @@ body {
   color: var(--color-white);
   padding: 1.8rem 0 1.3rem 0;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Links im Footer */
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem 3rem;
+}
+
+.footer-links a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  position: relative;
+  padding: 0.3rem 0;
+}
+
+.footer-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--color-primary-light);
+  transition: width 0.3s ease;
+}
+
+.footer-links a:hover::after {
+  width: 100%;
+}
+
+/* Login‑Link im Footer */
+.footer-links a[href="login.html"] {
+  color: var(--color-primary-light);
+  font-weight: 600;
+}
+
+/* ==============================
+   MODAL FÜR VERGRÖSSERTE BILDER
+============================== */
+
+/* Modal‑Overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Inhalt des Modals */
+.modal-content {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Schließen‑Button */
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  color: var(--color-white);
+  font-size: 2.4rem;
+  cursor: pointer;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+  z-index: 1002;
+}
+
+.modal-close:hover {
+  color: #cccccc;
+}
+
+/* Bildbeschriftung (falls verwendet) */
+.modal-caption {
+  color: #f0f0f0;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Body‑Scrolling beim Modal verwalten */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  }
